@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>calculadora</title>
+</head>
+<body>
+    <section>
+        <h3>R$620,00 noite</h3>
+        <form action="#">
+            <div>
+                <p>
+                    <label for="checkin">CHECK-IN</label>
+                    <input type="date" id="checkin">
+                </p>
+                <p>
+                    <label for="checkout">CHECKOUT</label>
+                    <input type="date" id="checkout">
+                </p>
+            </div>
+            <p>
+                <label for="hospedes">HÓSPEDES</label>
+                <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </p> 
+        </form>
+        <div>
+            <p>
+                Você ainda não será cobrado</p>
+                <ul>
+                    <li>
+                        <span id="subtotal">R$620,00 x 5 noites</span> <span id="valor_sub">R$3.100</span>
+                    </li>
+                    <li>
+                        <span>Taxa de serviço Airbnb</span> <span>R$460</span>
+                    </li>
+                    <hr>
+                    <li>
+                        <span>Total sem impostos</span> <span>3.688</span>
+                    </li>
+                </ul>
+        </div>
+    </section>
+    <script>
+        let checkout = document.getElementById('checkout');
+        console.log(checkout);
+
+        checkout.addEventListener('change', function() {
+            let data_saida = new Date(this.value);
+            let data_entrada = new Date(document.getElementById('checkin').value);
+            console.log(data_saida, data_entrada);
+            let diarias = (data_saida - data_entrada) / 86400000;
+            console.log(diarias);
+
+            let subtotal = document.getElementById('subtotal');
+            subtotal.innerHTML = "R$620,00 x " + diarias + " noites ";
+            let valor_sub = document.getElementById('valor_sub');
+            valor_sub.innerHTML = "R$" + (620 * diarias);
+            /*                                                                    
+            let total = document.getElementById('total');
+            total.innerHTML = "R$" + (620 * diarias + 460);
+            let total_sem_impostos = document.getElementById('total_sem_impostos'); 
+            total_sem_impostos.innerHTML = "R$" + (620 * diarias + 460);
+            */
+            
+        });
+    </script>
+
+    
+</body>
+</html>
