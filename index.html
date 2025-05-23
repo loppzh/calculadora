@@ -9,7 +9,7 @@
 </head>
 <body>
     <section>
-        <h3>R$620,00 noite</h3>
+        <h3><span id="preco_diaria">R$620 </span> noite</h3>
         <form action="#">
             <div>
                 <p>
@@ -39,11 +39,14 @@
                         <span id="subtotal">R$620,00 x 5 noites</span> <span id="valor_sub">R$3.100</span>
                     </li>
                     <li>
-                        <span>Taxa de serviço Airbnb</span> <span>R$460</span>
+                        <span>Taxa de limpeza</span> <span id="taxa_limpeza">R$120</span>
+                    </li>
+                    <li>
+                        <span>Taxa de serviço Airbnb</span> <span id="taxa_servico">R$460</span>
                     </li>
                     <hr>
                     <li>
-                        <span>Total sem impostos</span> <span>3.688</span>
+                        <span>Total sem impostos</span> <span id="total">3.688</span>
                     </li>
                 </ul>
         </div>
@@ -56,19 +59,30 @@
             let data_saida = new Date(this.value);
             let data_entrada = new Date(document.getElementById('checkin').value);
             console.log(data_saida, data_entrada);
-            let diarias = (data_saida - data_entrada) / 86400000;
-            console.log(diarias);
+            let qtd_diarias = (data_saida - data_entrada) / 86400000;
+            console.log(qtd_diarias);
+
+            let preco_diaria = parseFloat(document.getElementById('preco_diaria').innerText.substring(2));
+            console.log(preco_diaria);
 
             let subtotal = document.getElementById('subtotal');
-            subtotal.innerHTML = "R$620,00 x " + diarias + " noites ";
+            subtotal.innerHTML = "R$" + preco_diaria + " x " + qtd_diarias + " noites ";
             let valor_sub = document.getElementById('valor_sub');
-            valor_sub.innerHTML = "R$" + (620 * diarias);
-            /*                                                                    
+            let valor_diarias = preco_diaria * qtd_diarias;
+            valor_sub.innerHTML = "R$" +  valor_diarias;
+
+            let taxa_servico = document.getElementById('taxa_servico');
+            let valor_taxa_servico = 0.15 * valor_diarias;
+            taxa_servico.innerHTML = "R$" + valor_taxa_servico;
+
+            let taxa_limpeza = document.getElementById('taxa_limpeza');
+            let valor_taxa_limpeza = parseFloat(taxa_limpeza.innerText.substring(2));
+            console.log(valor_taxa_limpeza);
+
             let total = document.getElementById('total');
-            total.innerHTML = "R$" + (620 * diarias + 460);
-            let total_sem_impostos = document.getElementById('total_sem_impostos'); 
-            total_sem_impostos.innerHTML = "R$" + (620 * diarias + 460);
-            */
+            total.innerHTML = "R$" + (valor_diarias + valor_taxa_servico + valor_taxa_limpeza);
+            
+        
             
         });
     </script>
