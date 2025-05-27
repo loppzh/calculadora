@@ -1,56 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>calculadora</title>
+    <title>Calculadora</title>
 </head>
 <body>
     <section>
-        <h3><span id="preco_diaria">R$620 </span> noite</h3>
-        <form action="#">
-            <div>
-                <p>
+        <h3><span id="preco_diaria">R$620</span> noite</h3>
+        <form class="formulario">
+            <div class="datas">
+                <div class="campo">
                     <label for="checkin">CHECK-IN</label>
                     <input type="date" id="checkin">
-                </p>
-                <p>
+                </div>
+                <div class="campo">
                     <label for="checkout">CHECKOUT</label>
                     <input type="date" id="checkout">
-                </p>
+                </div>
             </div>
-            <p>
+
+            <div class="campo">
                 <label for="hospedes">HÓSPEDES</label>
-                <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                <select id="hospedes">
+                        <option value="1">1 hóspede</option>
+                        <option value="2">2 hóspedes</option>
+                        <option value="3">3 hóspedes</option>
+                        <option value="4">4 hóspedes</option>
                 </select>
-            </p> 
+            </div>
         </form>
+        <button type="button" id="reservar">Reservar</button>
+
         <div>
-            <p>
-                Você ainda não será cobrado</p>
-                <ul>
-                    <li>
-                        <span id="subtotal">R$620,00 x 5 noites</span> <span id="valor_sub">R$3.100</span>
-                    </li>
-                    <li>
-                        <span>Taxa de limpeza</span> <span id="taxa_limpeza">R$120</span>
-                    </li>
-                    <li>
-                        <span>Taxa de serviço Airbnb</span> <span id="taxa_servico">R$460</span>
-                    </li>
-                    <hr>
-                    <li>
-                        <span>Total sem impostos</span> <span id="total">3.688</span>
-                    </li>
-                </ul>
+            <p>Você ainda não será cobrado</p>
+            <ul>
+                <li>
+                    <span id="subtotal">R$620,00 x 5 noites</span> <span id="valor_sub">R$3.100</span>
+                </li>
+                <li>
+                    <span>Taxa de limpeza</span> <span id="taxa_limpeza">R$120</span>
+                </li>
+                <li>
+                    <span>Taxa de serviço Airbnb</span> <span id="taxa_servico">R$460</span>
+                </li>
+                <hr>
+                <li>
+                    <span>Total sem impostos</span> <span id="total">R$3.688</span>
+                </li>
+            </ul>
         </div>
     </section>
-    <script src="js/script.js"></script>
+
+    <script>
+        const checkin = document.getElementById('checkin');
+        const checkout = document.getElementById('checkout');
+        const hospedes = document.getElementById('hospedes');
+
+        function calcular() {
+            const data_saida = new Date(checkout.value);
+            const data_entrada = new Date(checkin.value);
+
+            if (isNaN(data_saida) || isNaN(data_entrada) || data_saida <= data_entrada) {
+                console.log('Datas inválidas ou não selecionadas corretamente');
+                return;
+            }
+
+            const qtd_diarias = (data_saida - data_entrada) / 86400000;
+            console.log(`Quantidade de diárias: ${qtd_diarias}`);
+
+            const preco_diaria = parseFloat(document.getElementById('preco_diaria').innerText.substring(2));
+            const qtd_hospedes = parseInt(hospedes.value);
+
+            console.log(`Preço base da diária: R$${preco_diaria}`);
+            console.log(`Quantidade de hóspedes: ${qtd_hospedes}`);
+
+            const preco_diaria_por_hospedes = preco_diaria * qtd_hospedes;
+            console.log(`Preço da diária considerando hóspedes: R$${preco_diaria_por_hospedes}`);
+
+            const subtotal = document.getElementById('subtotal');
+            subtotal.innerHTML = `R$${preco_diaria_por_hospedes} x ${qtd_diarias} noites`;
+
+            const valor_diarias = preco_diaria_por_hospedes * qtd_diarias;
+            console.log(`Valor das diárias: R$${valor_diarias}`);
+
+            document.getElementById('valor_sub').innerHTML = "R$" + valor_diarias;
+
+            const valor_taxa_servico = 0.15 * valor_diarias;
+            console.log(`Taxa de serviço (15%): R$${valor_taxa_servico}`);
+
+            document.getElementById('taxa_servico').innerHTML = "R$" + valor_taxa_servico;
+
+            const valor_taxa_limpeza = parseFloat(document.getElementById('taxa_limpeza').innerText.substring(2));
+            console.log(`Taxa de limpeza: R$${valor_taxa_limpeza}`);
+
+            const total = valor_diarias + valor_taxa_servico + valor_taxa_limpeza;
+            console.log(`TOTAL SEM IMPOSTOS: R$${total}`);
+            console.log('----------------------------');
+
+            document.getElementById('total').innerHTML = "R$" + total;
+        }
+
+        checkin.addEventListener('change', calcular);
+        checkout.addEventListener('change', calcular);
+        hospedes.addEventListener('change', calcular);
+    </script>
 </body>
 </html>
