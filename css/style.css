@@ -109,8 +109,9 @@ button:hover {
 div > p {
     color: #555;
     font-size: 14px;
-    margin: 10px 0;
+    margin: 6px 0;
     text-align: center;
+    padding-bottom: 6px;
 }
 
 ul {
