@@ -97,7 +97,7 @@ button {
     padding: 12px;
     cursor: pointer;
     font-size: 16px;
-    margin: 16px 0; 
+    margin: 16px 0;
 }
 
 
@@ -132,6 +132,13 @@ ul li span:first-child {
     cursor: pointer;
     text-decoration: none;
 }
+
+.linha {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
 
 hr {;
     border: none;
